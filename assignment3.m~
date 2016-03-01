@@ -84,20 +84,15 @@ while ischar(line) %fill in condition here
     
     if %fill in condition here
      
-        %% Remove all whitespaces,
-                delimiter = {'    ','. ','\t',',',' ',';'}; 
-        %% 
-        line = strtok(line, delimiter)
+        %% Remove all whitespaces, 
         
-        %% 
-        % and convert all of the letters to the
-        % same case (i.e., all uppercase or all lowercase). This will
-        % prevent Matlab from double-counting (ex. considering 'a' and
-        % 'A' as two separate letters).
+        %% and convert all of the letters to the
         line = lower(line);
         
-
-
+        %     same case (i.e., all uppercase or all lowercase). This will
+        %     prevent Matlab from double-counting (ex. considering 'a' and
+        %     'A' as two separate letters).
+        % delimiter = {'    ','. ','\t',',',' ',';'}; %define delimiters
         % (2) Remove special characters like punctuation marks and dashes.
         %     There are multiple ways to do this, but there is a function
         %     that lets you replace all occurences of something (like
