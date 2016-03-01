@@ -81,41 +81,30 @@ while ischar(line) %fill in condition here
     % HINT: There is a specific function for this! If you're stuck, try
     % using Mathworks to search for a function that splits strings at a
     % delimiter. Then use this in combination with an if statement
-    
-    if %fill in condition here
      
-        %% Remove all whitespaces,
-                delimiter = {'    ','. ','\t',',',' ',';'}; 
-        %% 
-        line = strtok(line, delimiter)
-        
-        %% 
-        % and convert all of the letters to the
-        % same case (i.e., all uppercase or all lowercase). This will
-        % prevent Matlab from double-counting (ex. considering 'a' and
-        % 'A' as two separate letters).
+    %% Insert whitespaces at delimiters
+    delimiter = {'    ','. ','\t',',',' ',';','.','-','"','(',')','!','?'};
+    line = strtok(line, delimiter);
+    
+        %% Make Lowercase
+        % Convert all of the letters to the same case (i.e., all uppercase 
+        % or all lowercase). This will prevent Matlab from double-counting 
+        % (ex. considering 'a' and 'A' as two separate letters).
         line = lower(line);
-        
 
-
-        % (2) Remove special characters like punctuation marks and dashes.
+        %% Remove special characters like punctuation marks and dashes.
         %     There are multiple ways to do this, but there is a function
         %     that lets you replace all occurences of something (like
         %     special characters) within a string with something else (like
         %     an empty space). See if you can find it using Mathworks! Note
         %     that after removing special characters, a word can be further
         %     split into multiple words. (e.g. 'duck-like' => 'duck',  'like')
-        % (3) Of course, save the updated version of the current word!
-        
-        
-
+        line = regexprep(line,'[^a-zA-Z]',' ');
         
         %% split line into words at white spaces
-        
         words = strsplit(line);
         
-        % -------------------- %
-        
+        %%
         % Now that the current word is in a form we can work with, we
         % want to know how many times that word appears in the file.
         % Remember the map container we created earlier? Now is the
@@ -144,9 +133,7 @@ while ischar(line) %fill in condition here
         % above (this should be one line of code)
         line = fgetl(moby);
         
-        % Remember to end all those loops and conditionals you started earlier!
-    end
-end
+% Remember to end all those loops and conditionals you started earlier!
 end
 
 % Remember to close the file (to save memory!).
@@ -253,7 +240,7 @@ letterFreqs = containers.Map;
 % can work with.
 % -- Your code here -- %
 
-for %add condition here
+% for %add condition here
     
     % -------------------- %
     
@@ -271,7 +258,7 @@ for %add condition here
     % -------------------- %
     
     % Remember to end the outer loop!
-end
+% end
 
 % Now that you have the letter frequencies stored, you should export them to
 % a .csv file in alphabetical order. The resulting file should contain three
@@ -374,7 +361,7 @@ disp('Output of Letter Frequencies Complete')
 % -- Your code here -- %
 
 % Please call this variable allFreqs
-allFreqs =   % Bin by frequency class
+    % allFreqs =   % Bin by frequency class
 
 % -------------------- %
 
@@ -392,14 +379,14 @@ allFreqs =   % Bin by frequency class
 % 'histcounts' separates the values into bins based on an automatic binning
 % algorithm. If you want to learn more, type 'help histcounts' into your
 % command window.
-bins = histcounts(allFreqs);
-binWidth = round(max(allFreqs)/length(bins));
+    % bins = histcounts(allFreqs);
+    % binWidth = round(max(allFreqs)/length(bins));
 
 % Now that we know how many bins we should have and how wide our bins should
 % be, we can bin word lengths by frequency. First, we'll make an empty cell array
 % that will eventually store the length of each word within a corresponding
 % bin.
-wordLengthByFreq = cell(1,length(bins));
+    % wordLengthByFreq = cell(1,length(bins));
 
 
 %%
@@ -408,20 +395,20 @@ wordLengthByFreq = cell(1,length(bins));
 % of all words that fall into one frequency bin. So we'll initializes all
 % entries in this array to be an empty matrix because new data will be entered using a
 % concatenation operation, which cannot be done if a cell entry is not defined to be a matrix.
-for i = 1:size(bins,2)
-    wordLengthByFreq{i} = [];
-end
+    % for i = 1:size(bins,2)
+    %     wordLengthByFreq{i} = [];
+    % end
 
 % Now, we'll loop through all the words stored in your map container, and bin
 % word lengths by frequency. After getting the current word and saving it
 % as a usable variable, we'll to store the length of that word within
 % the associated bin. This takes a couple of steps. Please do not change this code.
-for i = 1:size(allWords,2)
-    curr_word = allWords(1,i);
-    curr_word = curr_word{1};
-    bin = floor(wordFreqs(curr_word) / binWidth) + 1;
-    wordLengthByFreq{bin} = horzcat(wordLengthByFreq{bin},[size(curr_word,2)]);
-end
+    % for i = 1:size(allWords,2)
+    %     curr_word = allWords(1,i);
+    %     curr_word = curr_word{1};
+    %     bin = floor(wordFreqs(curr_word) / binWidth) + 1;
+    %     wordLengthByFreq{bin} = horzcat(wordLengthByFreq{bin},[size(curr_word,2)]);
+    % end
 
 %%
 % The following code smooths your results. (In other words, it compensates
@@ -433,23 +420,23 @@ end
 % that fall into each bin of frequency.
 
 % Find mean word length and total frequency per bin
-meanWordLengths = {};
+    % meanWordLengths = {};
 % Ignore empty buckets to smooth
-ind = 1;
-infrequent = []; %bin and exclude all words appearing less than 10 times together to smooth
-for i = 1:size(wordLengthByFreq,2)
-    meanLength = mean(wordLengthByFreq{i});
-    if isnan(meanLength) == 0
-        if length(wordLengthByFreq{i}) < 10
-            infrequent = horzcat(infrequent,wordLengthByFreq{i});
-        else
-            meanWordLengths{ind} = meanLength;
-            ind = ind+1;
-        end
-        
-    end
-end
-meanWordLengths = cell2mat(meanWordLengths);
+    % ind = 1;
+    % infrequent = []; %bin and exclude all words appearing less than 10 times together to smooth
+    % for i = 1:size(wordLengthByFreq,2)
+    %     meanLength = mean(wordLengthByFreq{i});
+    %     if isnan(meanLength) == 0
+    %         if length(wordLengthByFreq{i}) < 10
+    %             infrequent = horzcat(infrequent,wordLengthByFreq{i});
+    %         else
+    %             meanWordLengths{ind} = meanLength;
+    %             ind = ind+1;
+    %         end
+    %         
+    %     end
+    % end
+    % meanWordLengths = cell2mat(meanWordLengths);
 %%
 % Finally, plot the mean word length within each bin as a function of word
 % frequency. Make sure to add a title and label your x and y axes! Have
